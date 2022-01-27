@@ -1,12 +1,23 @@
 import React from 'react';
 import '../shared/App.css';
-import {useState} from 'react';
-import Form from '../components/Form';
+import {useState, useEffect} from 'react';
 import Update from '../components/Update';
 
-const Insert = () => {
+const Put = ({match}) => {
     const [articles, setArticles] = useState([])
     const [editedArticle, setEditArticle] = useState(null)
+
+  useEffect(() => {
+    fetch(`http://127.0.0.1:5000/get/${match.params.id}/`, {
+      method:'GET',
+      headers: {
+        'Content-Type' : 'application/json'
+      }
+    })
+    .then(resp => resp.json())
+    .then(resp => setArticles(resp))
+    .catch(error => console.log(error))
+  }, [])
 
   const updatedData = (article) => {
     const new_article = articles.map(my_article => {
@@ -27,17 +38,17 @@ const Insert = () => {
     <div className="App">
       <div className="row">
         <div className="col">
-          <h1>Advertisements Insert</h1>
+          <h1>Advertisements Update</h1>
         </div>
         <div className="col">
         </div>
       </div>
       <br/>
       <br/>
-        <Form article = {editedArticle} updatedData = {updatedData} insertedArticle = {insertedArticle}/>
+        <Update article = {articles} updatedData = {updatedData} insertedArticle = {insertedArticle}/>
 
     </div>
   );
 }
 
-export default Insert;
+export default Put;

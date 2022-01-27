@@ -1,12 +1,14 @@
 
-
+import {Link} from "react-router-dom";
 import React, {useState, useEffect} from 'react'
 import APIService from "./APIService";
+import { useHistory } from 'react-router-dom';
 
 function Update(props) {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [price, setPrice] = useState('')
+    let history = useHistory();
 
     useEffect(() => {
         setTitle(props.article.title)
@@ -17,7 +19,7 @@ function Update(props) {
     const updateArticle = () => {
         APIService.UpdateArticle(props.article.id, {title, description, price})
             // .then(resp => console.log(props.article.id))
-            .then(resp => props.updatedData(resp))
+            .then(() => history.push("/"))
             .catch(error => console.log(error))
     }
 
@@ -65,7 +67,7 @@ function Update(props) {
                             <button
                         onClick={insertArticle}
                         className = "btn btn-success mt-3"
-                    >Insert</button>
+                    ><Link to='/' className="btn btn-success">Insert</Link></button>
                     }
 
                 </div>

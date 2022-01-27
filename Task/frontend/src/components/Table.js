@@ -37,9 +37,9 @@ export default function Table({columns, data}) {
           prepareRow(row);
           return (
             <tr {...row.getRowProps()}>
-              {row.cells.map(cell => {
+              {row.cells.map((cell,j) => {
                 return <td {...cell.getCellProps()}>
-                    <Link to={{pathname:`/detail/${row.$id}`}}
+                    <Link to={{pathname:`/detail/${i}`}}
                           style={{ color:'white', textDecoration: 'none' }}>
                         {cell.render("Cell")}</Link></td>;
               })}
