@@ -31,4 +31,12 @@ export default class APIService {
         }
         })
     }
+    static getArticle(id) {
+        return fetch(`http://127.0.0.1:5000/get/${id}/`,
+            {method:'GET',
+      headers: {
+        'Content-Type' : 'application/json'
+        }})
+            .then(resp => resp.json())
+    }
 }
