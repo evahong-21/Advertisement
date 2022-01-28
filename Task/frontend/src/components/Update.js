@@ -58,11 +58,12 @@ function Update(props) {
                     className = "form-control"
                     placeholder = "Please Enter Price (Only Number)"
                 />
+                    <br />
                     {
                         props.article.id ? <button
                         onClick={updateArticle}
-                        className = "btn btn-success mt-3"
-                    >Update</button>
+                        className = "btn btn-light"
+                    >Done</button>
                       :
                             <button
                         onClick={insertArticle}

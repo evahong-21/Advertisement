@@ -41,10 +41,7 @@ const Detail = ({match}) => {
           <h1>Advertisements Detail</h1>
         </div>
         <div className="col">
-             <button
-              className="btn btn-success"
-              // onClick={openForm}
-          ><Link to='/' className="btn btn-success">Home</Link></button>
+             <Link to='/' className="btn btn-light">Home</Link>
         </div>
       </div>
       <br/>
@@ -59,10 +56,10 @@ const Detail = ({match}) => {
               <br />
               <div className="row">
                   <div className="col">
-                      <button className="btn btn-primary" ><Link to={{pathname:`/put/${article.id}`}} className="btn btn-primary" >Update</Link></button>
+                     <Link to={{pathname:`/put/${article.id}`}} class="btn btn-outline-light" >Update</Link>
                   </div>
                   <div className="col-md-1">
-                      <button className="btn btn-danger"
+                      <button className="btn btn-outline-light"
                       onClick = {() => deleteArticle(article)}>Delete</button>
                   </div>
               </div>

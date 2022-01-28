@@ -2,6 +2,7 @@ import React from 'react';
 import '../shared/App.css';
 import {useState, useEffect} from 'react';
 import Update from '../components/Update';
+import {Link} from "react-router-dom";
 
 const Put = ({match}) => {
     const [articles, setArticles] = useState([])
@@ -41,6 +42,7 @@ const Put = ({match}) => {
           <h1>Advertisements Update</h1>
         </div>
         <div className="col">
+          <Link to='/' className="btn btn-light">Home</Link>
         </div>
       </div>
       <br/>

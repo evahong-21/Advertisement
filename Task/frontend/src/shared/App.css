@@ -6,6 +6,11 @@
   padding:20px;
 }
 
+.button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
 /* .App-logo {
   height: 40vmin;
   pointer-events: none;

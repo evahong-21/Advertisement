@@ -30,10 +30,7 @@ const Home = () => {
           <h1>Advertisements</h1>
         </div>
         <div className="col">
-          <button
-              className="btn btn-success"
-              // onClick={openForm}
-          ><Link to='/insert' className="btn btn-success">InsertArticle</Link></button>
+            <Link to='/insert' className="btn btn-light">InsertArticle</Link>
         </div>
       </div>
       <br/>
