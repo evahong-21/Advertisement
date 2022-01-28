@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import React from 'react'
-import {useTable} from 'react-table';
+import {useTable, useSortBy} from 'react-table';
 import {useState} from 'react';
 
 export default function Table({columns, data}) {
@@ -14,32 +14,40 @@ export default function Table({columns, data}) {
   } = useTable({
     columns,
     data
-  });
-      const [sortedField, setSortedField] = useState(null);
-  /*
-    Render the UI for your table
-    - react-table doesn't have UI, it's headless. We just need to put the react-table props from the Hooks, and it will do its magic automatically
-  */
-
+  },
+          useSortBy
+  );
+      // const [sortedField, setSortedField] = useState(null);
+    const firstPageRows = rows.slice(0, 10)
   return (
     <table class="table table-dark table-hover" {...getTableProps()} >
       <thead>
         {headerGroups.map(headerGroup => (
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps()} >{column.render("Header")}</th>
+              <th {...column.getHeaderProps(column.getSortByToggleProps())} >
+                  {column.render("Header")}
+                <span>
+                    {column.isSorted
+                        ? column.isSortedDesc
+                            ? '⇂'
+                            : '↾'
+                        : ''}
+                </span>
+              </th>
             ))}
           </tr>
         ))}
       </thead>
       <tbody {...getTableBodyProps()}>
-        {rows.map((row, i) => {
+        {rows.map((row) => {
           prepareRow(row);
+          // console.log(row);
           return (
             <tr {...row.getRowProps()}>
-              {row.cells.map((cell,j) => {
+              {row.cells.map((cell) => {
                 return <td {...cell.getCellProps()}>
-                    <Link to={{pathname:`/detail/${i}`}}
+                    <Link to={{pathname:`/detail/${cell.row.original.id}`}}
                           style={{ color:'white', textDecoration: 'none' }}>
                         {cell.render("Cell")}</Link></td>;
               })}

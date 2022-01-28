@@ -41,6 +41,10 @@ const Detail = ({match}) => {
           <h1>Advertisements Detail</h1>
         </div>
         <div className="col">
+             <button
+              className="btn btn-success"
+              // onClick={openForm}
+          ><Link to='/' className="btn btn-success">Home</Link></button>
         </div>
       </div>
       <br/>

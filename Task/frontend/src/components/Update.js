@@ -19,7 +19,7 @@ function Update(props) {
     const updateArticle = () => {
         APIService.UpdateArticle(props.article.id, {title, description, price})
             // .then(resp => console.log(props.article.id))
-            .then(() => history.push("/"))
+            .then(() => history.push(`/detail/${props.article.id}/`))
             .catch(error => console.log(error))
     }
 

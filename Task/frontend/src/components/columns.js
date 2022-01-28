@@ -1,11 +1,13 @@
 export const COLUMNS = [
     {
         Header: 'Id',
-        accessor: 'id'
+        accessor: 'id',
+        disableSortBy: true
     },
     {
         Header: 'Title',
-        accessor: 'title'
+        accessor: 'title',
+        disableSortBy: true
     },
     {
         Header: 'Price',
