@@ -1,5 +1,4 @@
 
-import {Link} from "react-router-dom";
 import React, {useState, useEffect} from 'react'
 import APIService from "./APIService";
 import { useHistory } from 'react-router-dom';
@@ -23,15 +22,8 @@ function Update(props) {
             .catch(error => console.log(error))
     }
 
-    const insertArticle = () => {
-        APIService.InsertArticle({title, description, price})
-            .then(resp => props.insertedArticle(resp))
-            .catch(error => console.log(error))
-    }
-
     return (
         <div>
-            {props.article ? (
                 <div className = "mb-3">
                 <label htmlFor = "title" className = "form-label">Title</label>
                 <input
@@ -40,7 +32,7 @@ function Update(props) {
                     placeholder = "Please Enter Title"
                     onChange = {(e) => setTitle(e.target.value)}
                 />
-
+                <br />
                     <label htmlFor = "description" className = "form-label">Description</label>
                 <textarea
                     row = "5"
@@ -49,7 +41,7 @@ function Update(props) {
                     className = "form-control"
                     placeholder = "Please Enter Description"
                     />
-
+                <br />
                     <label htmlFor = "price" className = "form-label">Price</label>
                 <input
                     type="number"
@@ -59,20 +51,12 @@ function Update(props) {
                     placeholder = "Please Enter Price (Only Number)"
                 />
                     <br />
-                    {
-                        props.article.id ? <button
+                        <button
                         onClick={updateArticle}
-                        className = "btn btn-light"
+                        className = "btn btn-outline-light"
                     >Done</button>
-                      :
-                            <button
-                        onClick={insertArticle}
-                        className = "btn btn-success mt-3"
-                    ><Link to='/' className="btn btn-success">Insert</Link></button>
-                    }
 
                 </div>
-                ):null}
         </div>
     )
 }
