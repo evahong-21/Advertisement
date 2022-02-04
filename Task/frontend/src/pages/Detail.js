@@ -37,9 +37,8 @@ function Detail({ match }) {
     const confirmAction = () => {
       if (window.confirm(message)) {
         onConfirm();
-      } else {
-        onCancel();
       }
+      onCancel();
     };
     return confirmAction;
   };

@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import APIService from "./APIService";
-import { useHistory } from "react-router-dom";
 
 function Update(props) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
-  let history = useHistory();
 
   useEffect(() => {
     setTitle(props.article.title);

@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import datetime
 from flask_marshmallow import Marshmallow
 from flask_cors import CORS
+from sqlalchemy import asc, desc
 
 app = Flask(__name__)
 CORS(app)
@@ -35,6 +36,18 @@ articles_schema = ArticleSchema(many=True)
 @app.route('/get', methods=['GET'])
 def get_articles():
     all_articles = Articles.query.all()
+    results = articles_schema.dump(all_articles)
+    return jsonify(results)
+
+@app.route('/get/<column>&<sortby>/', methods=['GET'])
+def get_sort_articles(column, sortby):
+    #sortby True = desc / False = asc
+    # 시간이 갈수록 큰 값
+    all_articles = Articles.query.order_by(asc(column))
+
+    if sortby == "True":
+        all_articles = Articles.query.order_by(desc(column))
+
     results = articles_schema.dump(all_articles)
     return jsonify(results)
 
