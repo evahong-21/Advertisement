@@ -1,9 +1,5 @@
-from email.policy import default
-from turtle import title
-from xmlrpc.client import Marshaller
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
-# import sqlalchemy
 import datetime
 from flask_marshmallow import Marshmallow
 from flask_cors import CORS
@@ -83,5 +79,5 @@ def article_delete(id):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=True)
 

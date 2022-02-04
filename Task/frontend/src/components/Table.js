@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
-import React from 'react';
-import { useTable, useSortBy, usePagination } from 'react-table';
-import './Table.css';
+import { Link } from "react-router-dom";
+import React from "react";
+import { useTable, useSortBy, usePagination } from "react-table";
+import "./Table.css";
 
 export default function Table({ columns, data }) {
   const {
@@ -19,7 +19,6 @@ export default function Table({ columns, data }) {
     previousPage,
     setPageSize,
     state: { pageIndex, pageSize },
-
   } = useTable(
     {
       columns,
@@ -27,13 +26,13 @@ export default function Table({ columns, data }) {
       initialState: { pageIndex: 0 },
     },
     useSortBy,
-    usePagination,
+    usePagination
   );
 
   return (
     <>
       <div className="select-box">
-      <select
+        <select
           value={pageSize}
           onChange={(e) => {
             setPageSize(Number(e.target.value));
@@ -41,26 +40,20 @@ export default function Table({ columns, data }) {
         >
           {[10, 20, 30, 40, 50].map((pageSize) => (
             <option key={pageSize} value={pageSize}>
-              Show
-              {' '}
-              {pageSize}
+              Show {pageSize}
             </option>
           ))}
         </select>
-        </div>
+      </div>
       <table className="table table-dark table-hover" {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
                 <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                  {column.render('Header')}
+                  {column.render("Header")}
                   <span>
-                    {column.isSorted
-                      ? column.isSortedDesc
-                        ? ' ⇂'
-                        : ' ↾'
-                      : ''}
+                    {column.isSorted ? (column.isSortedDesc ? " ⇂" : " ↾") : ""}
                   </span>
                 </th>
               ))}
@@ -77,9 +70,9 @@ export default function Table({ columns, data }) {
                   <td {...cell.getCellProps()}>
                     <Link
                       to={{ pathname: `/detail/${cell.row.original.id}` }}
-                      style={{ color: 'white', textDecoration: 'none' }}
+                      style={{ color: "white", textDecoration: "none" }}
                     >
-                      {cell.render('Cell')}
+                      {cell.render("Cell")}
                     </Link>
                   </td>
                 ))}
@@ -90,31 +83,26 @@ export default function Table({ columns, data }) {
       </table>
       <div className="pagination">
         <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          {'<<'}
+          {"<<"}
         </button>
         &nbsp;
         <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          {'<'}
+          {"<"}
         </button>
         &nbsp;
         <button onClick={() => nextPage()} disabled={!canNextPage}>
-          {'>'}
+          {">"}
         </button>
         &nbsp;
         <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {'>>'}
+          {">>"}
         </button>
         &nbsp; &nbsp;
         <span>
-          Page
-          {' '}
+          Page{" "}
           <strong>
-            {pageIndex + 1}
-            {' '}
-            of {' '}
-            {pageOptions.length}
-          </strong>
-          {' '}
+            {pageIndex + 1} of {pageOptions.length}
+          </strong>{" "}
         </span>
         <span>
           &nbsp; | Go to page : &nbsp;
@@ -125,11 +113,9 @@ export default function Table({ columns, data }) {
               const page = e.target.value ? Number(e.target.value) - 1 : 0;
               gotoPage(page);
             }}
-            style={{ width: '100px' }}
+            style={{ width: "100px" }}
           />
-        </span>
-        {' '}
-
+        </span>{" "}
       </div>
     </>
   );

@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import '../shared/App.css';
-import { Link } from 'react-router-dom';
-import Update from '../components/Update';
+import React, { useState, useEffect } from "react";
+import "../shared/App.css";
+import { Link } from "react-router-dom";
+import Update from "../components/Update";
 
 function Put({ match }) {
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
     fetch(`http://127.0.0.1:5000/get/${match.params.id}/`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     })
       .then((resp) => resp.json())
@@ -40,13 +40,18 @@ function Put({ match }) {
           <h1>Advertisements Update</h1>
         </div>
         <div className="col-md-2">
-          <Link to="/" className="btn btn-light">Home</Link>
+          <Link to="/" className="btn btn-light">
+            Home
+          </Link>
         </div>
       </div>
       <br />
       <br />
-      <Update article={articles} updatedData={updatedData} insertedArticle={insertedArticle} />
-
+      <Update
+        article={articles}
+        updatedData={updatedData}
+        insertedArticle={insertedArticle}
+      />
     </div>
   );
 }
