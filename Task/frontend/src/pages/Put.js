@@ -18,21 +18,6 @@ function Put({ match }) {
       .catch((error) => console.log(error));
   }, [match.params.id]);
 
-  const updatedData = (article) => {
-    const new_article = articles.map((my_article) => {
-      if (my_article.id === article.id) {
-        return article;
-      }
-      return my_article;
-    });
-    setArticles(new_article);
-  };
-
-  const insertedArticle = (article) => {
-    const new_articles = [...articles, article];
-    setArticles(new_articles);
-  };
-
   return (
     <div className="App">
       <div className="row">
@@ -47,11 +32,7 @@ function Put({ match }) {
       </div>
       <br />
       <br />
-      <Update
-        article={articles}
-        updatedData={updatedData}
-        insertedArticle={insertedArticle}
-      />
+      <Update article={articles} />
     </div>
   );
 }

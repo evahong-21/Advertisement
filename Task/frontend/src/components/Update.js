@@ -12,10 +12,15 @@ function Update(props) {
     setPrice(props.article.price);
   }, [props.article]);
 
-  const updateArticle = () => {
+  const updateArticle = (e) => {
     APIService.UpdateArticle(props.article.id, { title, description, price })
-      // .then(resp => console.log(props.article.id))
-      .then((resp) => resp.json())
+      .then((resp) => {
+        if (resp.dateCreated === "None") {
+          alert("Input Error");
+          e.preventDefault();
+          document.location = `/put/${props.article.id}`;
+        }
+      })
       .catch((error) => console.log(error));
   };
 
@@ -27,10 +32,9 @@ function Update(props) {
             Title
           </label>
           <input
-            required
             type="text"
             className="form-control"
-            value={title}
+            value={title || ""}
             placeholder="Please Enter Title"
             onChange={(e) => setTitle(e.target.value)}
           />
@@ -39,21 +43,21 @@ function Update(props) {
             Description
           </label>
           <textarea
+            // required
             row="5"
-            value={description}
+            value={description || ""}
             onChange={(e) => setDescription(e.target.value)}
             className="form-control"
             placeholder="Please Enter Description"
-            required
           />
           <br />
           <label htmlFor="price" className="form-label">
             Price
           </label>
           <input
-            required
+            // required
             type="number"
-            value={price}
+            value={price || ""}
             onChange={(e) => setPrice(e.target.value)}
             className="form-control"
             placeholder="Please Enter Price (Only Number)"
