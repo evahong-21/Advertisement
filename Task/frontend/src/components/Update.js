@@ -16,10 +16,12 @@ function Update(props) {
     APIService.UpdateArticle(props.article.id, { title, description, price })
       .then((resp) => {
         if (resp.dateCreated === "None") {
-          alert("Input Error");
-          e.preventDefault();
-          document.location = `/put/${props.article.id}`;
+          alert("Please enter the blacks");
+        } else if (resp.dateCreated === "Integer") {
+          alert("Please enter a number");
         }
+        e.preventDefault();
+        document.location = `/put/${props.article.id}`;
       })
       .catch((error) => console.log(error));
   };
@@ -32,6 +34,7 @@ function Update(props) {
             Title
           </label>
           <input
+            required
             type="text"
             className="form-control"
             value={title || ""}
@@ -43,7 +46,7 @@ function Update(props) {
             Description
           </label>
           <textarea
-            // required
+            required
             row="5"
             value={description || ""}
             onChange={(e) => setDescription(e.target.value)}
@@ -55,7 +58,7 @@ function Update(props) {
             Price
           </label>
           <input
-            // required
+            required
             type="number"
             value={price || ""}
             onChange={(e) => setPrice(e.target.value)}

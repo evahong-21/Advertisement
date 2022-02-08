@@ -70,6 +70,16 @@ def add_article():
     description = request.json['description']
     price = request.json['price']
 
+    # 공백이 들어간다면 backend에서 에러 처리
+    if (not title.strip()) or (not description.strip()) or (not str(price).strip()):
+        # return "Record not found", 400
+        return article_schema.jsonify({"dateCreated": "None"})
+
+    try:
+        int(price)
+    except:
+        return article_schema.jsonify({"dateCreated": "Integer"})
+
     articles = Articles(title, description, price)
     db.session.add(articles)
     db.session.commit()
@@ -84,10 +94,14 @@ def update_article(id):
     description = request.json['description']
     price = request.json['price']
 
-    # 공백이 들어간다면 backend에서 에러 처리
     if (not title.strip()) or (not description.strip()) or (not str(price).strip()):
-        # return "Record not found", 400
+        print("error")
         return article_schema.jsonify({"dateCreated": "None"})
+
+    try:
+        int(price)
+    except:
+        return article_schema.jsonify({"dateCreated": "Integer"})
 
     article.title = title
     article.description = description

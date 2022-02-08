@@ -9,7 +9,14 @@ function Form() {
   const insertArticle = () => {
     APIService.InsertArticle({ title, description, price })
       // .then(() => history.push(`/`))
-      .then((resp) => resp.json())
+      .then((resp) => {
+        if (resp.dateCreated === "None") {
+          alert("Please enter the blacks");
+        } else if (resp.dateCreated === "Integer") {
+          alert("Please enter a number");
+        }
+        document.location = `/insert`;
+      })
       .catch((error) => console.log(error));
   };
   return (
