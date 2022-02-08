@@ -2,7 +2,7 @@ version: "3"
 services:
   client:
     build:
-      context: .frontend
+      context: ./frontend
       dockerfile: Dockerfile
     tty: true
     ports:
@@ -15,8 +15,8 @@ services:
 
   web:
     build:
-      context: ./Task/backend
-      dockerfile: Task/frontend/Dockerfile
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
       - ${PORT}:5000
     working_dir: /src
@@ -27,7 +27,7 @@ services:
 
   mariadb:
     image: mysql:5.7
-    container_name: mariadb
+    container_name: mariadb_container
     restart: unless-stopped
     command: --default-authentication-plugin=mysql_native_password
     volumes:
