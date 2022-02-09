@@ -20,7 +20,7 @@ function Home() {
   const columns = COLUMNS;
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:5000/get/${columnName}&${sortBy}/`, {
+    fetch(`get/${columnName}&${sortBy}/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

@@ -6,7 +6,7 @@ from flask_cors import CORS
 from sqlalchemy import asc, desc
 import config
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='./static', static_url_path='/')
 CORS(app)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = config.alchemy_uri()
@@ -38,6 +38,13 @@ class ArticleSchema(ma.Schema):
 article_schema = ArticleSchema()
 articles_schema = ArticleSchema(many=True)
 
+@app.before_first_request
+def init_db():
+    db.create_all()
+
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
 
 @app.route('/get', methods=['GET'])
 def get_articles():
