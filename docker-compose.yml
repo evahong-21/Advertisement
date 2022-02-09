@@ -10,8 +10,8 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
-    networks:
-      - frontend
+#    networks:
+#      - frontend
 
   web:
     build:
@@ -21,30 +21,37 @@ services:
       - ${PORT}:5000
     working_dir: /src
     command: python ./app.py
-    networks:
-      - frontend
-      - backend
+#    networks:
+#      - frontend
+#      - backend
 
   mariadb:
     image: mysql:5.7
     container_name: mariadb_container
-    restart: unless-stopped
-    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+#    restart: unless-stopped
+#    command: --default-authentication-plugin=mysql_native_password
     volumes:
       - ${PWD}/mysqldb:/var/lib/mysql
+    env_file:
+      - .env
     environment:
       - MYSQL_DATABASE=${DB_DATABASE}
       - MYSQL_USER=${DB_USERNAME}
       - MYSQL_PASSWORD=${DB_PASSWORD}
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
-    networks:
-      - backend
+#    networks:
+#      - backend
 
-networks:
-    frontend:
-        driver: bridge
-    backend:
-        driver: bridge
+#networks:
+#    frontend:
+#        driver: bridge
+#        external: true
+#        internal: true
+#    backend:
+#        driver: bridge
+#        external: true
+#        internal: true
 
 volumes:
    mariadbdata:

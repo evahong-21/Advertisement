@@ -17,7 +17,8 @@ export default class APIService {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(body),
-    }).then((resp) => resp.json());
+    }).then((resp) => resp.json())
+        .catch((error) => console.log(error))
   }
 
   static DeleteArticle(id) {

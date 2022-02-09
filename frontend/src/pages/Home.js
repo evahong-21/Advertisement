@@ -20,21 +20,18 @@ function Home() {
   const columns = COLUMNS;
 
   useEffect(() => {
-    // eslint-disable-next-line no-undef
-    fetch(`http://localhost:5000/get/${columnName}&${sortBy}/`, {
+    fetch(`http://127.0.0.1:5000/get/${columnName}&${sortBy}/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     })
-      // .then((resp) => console.log(resp))
       .then((resp) => resp.json())
       .then((resp) => setArticles(resp))
       .catch((error) => console.log(error));
   }, [sortBy, columnName]);
 
   return (
-    // eslint-disable-next-line react/jsx-filename-extension
     <div className="App">
       <div className="row">
         <div className="col">

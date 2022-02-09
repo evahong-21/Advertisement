@@ -4,11 +4,12 @@ import datetime
 from flask_marshmallow import Marshmallow
 from flask_cors import CORS
 from sqlalchemy import asc, desc
+import config
 
 app = Flask(__name__)
 CORS(app)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql://advertisement:1111@localhost/advertisements'
+app.config["SQLALCHEMY_DATABASE_URI"] = config.alchemy_uri()
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
