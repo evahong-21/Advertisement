@@ -1,8 +1,9 @@
-const f = fetch(process.env.REACT_APP_API_URL || '');
+const API_URL = process.env.REACT_APP_API_URL || '/api'
+
 
 export default class APIService {
   static UpdateArticle(id, body) {
-    return fetch(`http://127.0.0.1:5000/update/${id}/`, {
+    return fetch(`${API_URL}/advertisement?id=${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -13,7 +14,7 @@ export default class APIService {
   }
 
   static InsertArticle(body) {
-    return fetch(`advertisment`, {
+    return fetch(`${API_URL}/advertisement`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -24,19 +25,11 @@ export default class APIService {
   }
 
   static DeleteArticle(id) {
-    return fetch(`http://127.0.0.1:5000/delete/${id}/`, {
+    return fetch(`${API_URL}/advertisement?id=${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
     });
-  }
-  static getArticle(id) {
-    return fetch(`http://127.0.0.1:5000/get/${id}/`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((resp) => resp.json());
   }
 }

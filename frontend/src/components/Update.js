@@ -28,7 +28,7 @@ function Update(props) {
 
   return (
     <div>
-      <form action={`/detail/${props.article.id}/`} onSubmit={updateArticle}>
+      <form action={`/detail/${props.article.id}`} onSubmit={updateArticle}>
         <div className="mb-3">
           <label htmlFor="title" className="form-label">
             Title

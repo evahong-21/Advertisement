@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import React from "react";
 import { useTable, useSortBy, usePagination } from "react-table";
 import "./Table.css";
+// const API_URL = process.env.REACT_APP_API_URL || '/api'
 
 export default function Table({ columns, data }) {
   const {

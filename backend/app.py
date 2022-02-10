@@ -38,47 +38,41 @@ class ArticleSchema(ma.Schema):
 article_schema = ArticleSchema()
 articles_schema = ArticleSchema(many=True)
 
+
 @app.before_first_request
 def init_db():
     db.create_all()
+
 
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
 
-@app.route('/adver', methods=['GET'])
-def get_articles():
-    all_articles = Articles.query.all()
-    results = articles_schema.dump(all_articles)
-    return jsonify(results)
-
 
 @app.route('/api/advertisement', methods=['GET'])
-def get_sort_articles(column, sortby):
+def get_sort_articles():
     # sortby True = desc / False = asc
     # 시간이 갈수록 큰 값
+    field = request.args.get('field', "dateCreated", type=str)
+    sort = request.args.get('sort', "True", type=str)
+    # print(field, sort)
 
-    column = 'dateCreated'
+    all_articles = Articles.query.order_by(asc(field))
 
-    if request.args['column']:
-        column = request.args['column']
-
-    all_articles = Articles.query.order_by(asc(column))
-
-    if sortby == "True":
-        all_articles = Articles.query.order_by(desc(column))
+    if sort == "True":
+        all_articles = Articles.query.order_by(desc(field))
 
     results = articles_schema.dump(all_articles)
     return jsonify(results)
 
 
-@app.route('/get/<id>/', methods=['GET'])
-def post_details(id):
-    article = Articles.query.get(id)
+@app.route('/api/advertisement/detail', methods=['GET'])
+def post_details():
+    article = Articles.query.get(request.args.get("id"))
     return article_schema.jsonify(article)
 
 
-@app.route('/add', methods=['POST'])
+@app.route('/api/advertisement', methods=['POST'])
 def add_article():
     title = request.json['title']
     description = request.json['description']
@@ -100,9 +94,9 @@ def add_article():
     return article_schema.jsonify(articles)
 
 
-@app.route('/update/<id>/', methods=['PUT'])
-def update_article(id):
-    article = Articles.query.get(id)
+@app.route('/api/advertisement', methods=['PUT'])
+def update_article():
+    article = Articles.query.get(request.args.get("id"))
 
     title = request.json['title']
     description = request.json['description']
@@ -125,9 +119,9 @@ def update_article(id):
     return article_schema.jsonify(article)
 
 
-@app.route('/delete/<id>/', methods=['DELETE'])
-def article_delete(id):
-    article = Articles.query.get(id)
+@app.route('/api/advertisement', methods=['DELETE'])
+def article_delete():
+    article = Articles.query.get(request.args.get("id"))
     db.session.delete(article)
     db.session.commit()
     return article_schema.jsonify(article)

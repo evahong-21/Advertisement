@@ -21,7 +21,7 @@ function Home() {
 
   const columns = COLUMNS;
   useEffect(() => {
-    fetch(`${API_URL}/advertisement?field=${columnName}&sort=${sortBy}/`, {
+    fetch(`${API_URL}/advertisement?field=${columnName}&sort=${sortBy}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

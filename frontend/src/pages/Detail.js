@@ -4,12 +4,13 @@ import { useState, useEffect } from "react";
 import { useHistory, Link } from "react-router-dom";
 import APIService from "../components/APIService";
 import moment from "moment";
+const API_URL = process.env.REACT_APP_API_URL || '/api'
 
 function Detail({ match }) {
   const [article, setArticle] = useState([]);
   const history = useHistory();
   useEffect(() => {
-    fetch(`http://127.0.0.1:5000/get/${match.params.id}/`, {
+    fetch(`${API_URL}/advertisement/detail?id=${match.params.id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

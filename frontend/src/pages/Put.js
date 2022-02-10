@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import "../shared/App.css";
 import { Link } from "react-router-dom";
 import Update from "../components/Update";
+const API_URL = process.env.REACT_APP_API_URL || '/api'
 
 function Put({ match }) {
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:5000/get/${match.params.id}/`, {
+    fetch(`${API_URL}/advertisement/detail?id=${match.params.id}/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
