@@ -9,7 +9,7 @@ import config
 app = Flask(__name__)
 CORS(app)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = config.alchemy_uri()
+app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql://root:1111@localhost/advertisements'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
