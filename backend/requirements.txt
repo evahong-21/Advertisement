@@ -2,3 +2,4 @@ Flask>=2.0.2
 Flask-SQLAlchemy>=2.5.1
 flask_marshmallow
 flask_cors
+pymysql>=1.0.2
