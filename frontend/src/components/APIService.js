@@ -1,3 +1,5 @@
+const f = fetch(process.env.REACT_APP_API_URL || '');
+
 export default class APIService {
   static UpdateArticle(id, body) {
     return fetch(`http://127.0.0.1:5000/update/${id}/`, {
@@ -11,7 +13,7 @@ export default class APIService {
   }
 
   static InsertArticle(body) {
-    return fetch(`http://127.0.0.1:5000/add`, {
+    return fetch(`advertisment`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

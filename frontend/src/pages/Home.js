@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import Table from "../components/Table";
 import { COLUMNS } from "../components/columns";
 
+const API_URL = process.env.REACT_APP_API_URL || '/api'
+
 function Home() {
   const [articles, setArticles] = useState([]);
   const [columnName, setColumnName] = useState("dateCreated");
@@ -18,9 +20,8 @@ function Home() {
   };
 
   const columns = COLUMNS;
-
   useEffect(() => {
-    fetch(`http://127.0.0.1:5000/get/${columnName}&${sortBy}/`, {
+    fetch(`${API_URL}/advertisement?field=${columnName}&sort=${sortBy}/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

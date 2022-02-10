@@ -6,10 +6,10 @@ from flask_cors import CORS
 from sqlalchemy import asc, desc
 import config
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='./static', static_url_path='/')
 CORS(app)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql://root:1111@localhost/advertisements'
+app.config["SQLALCHEMY_DATABASE_URI"] = config.alchemy_uri()
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
@@ -38,18 +38,31 @@ class ArticleSchema(ma.Schema):
 article_schema = ArticleSchema()
 articles_schema = ArticleSchema(many=True)
 
+@app.before_first_request
+def init_db():
+    db.create_all()
 
-@app.route('/get', methods=['GET'])
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
+
+@app.route('/adver', methods=['GET'])
 def get_articles():
     all_articles = Articles.query.all()
     results = articles_schema.dump(all_articles)
     return jsonify(results)
 
 
-@app.route('/get/<column>&<sortby>/', methods=['GET'])
+@app.route('/api/advertisement', methods=['GET'])
 def get_sort_articles(column, sortby):
     # sortby True = desc / False = asc
     # 시간이 갈수록 큰 값
+
+    column = 'dateCreated'
+
+    if request.args['column']:
+        column = request.args['column']
+
     all_articles = Articles.query.order_by(asc(column))
 
     if sortby == "True":
