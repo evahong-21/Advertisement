@@ -17,6 +17,7 @@ function Detail({ match }) {
       },
     })
       .then((resp) => resp.json())
+                        // .then((resp)=>console.log(resp))
       .then((resp) => setArticle(resp))
       .catch((error) => console.log(error));
   }, [match.params.id]);

@@ -55,15 +55,27 @@ def get_sort_articles():
     # 시간이 갈수록 큰 값
     field = request.args.get('field', "dateCreated", type=str)
     sort = request.args.get('sort', "True", type=str)
+    per_page = request.args.get('page', 10, type=int)
+    page = request.args.get('index', 0, type=int)
+
     # print(field, sort)
 
-    all_articles = Articles.query.order_by(asc(field))
+    total = Articles.query.count()
+    all_articles = Articles.query.order_by(asc(field)).limit(per_page).offset(page*per_page)
 
     if sort == "True":
-        all_articles = Articles.query.order_by(desc(field))
+        all_articles = Articles.query.order_by(desc(field)).limit(per_page).offset(page*per_page)
 
     results = articles_schema.dump(all_articles)
-    return jsonify(results)
+    return jsonify({
+        'articles': results,
+        'pagination': {
+            'total': total,
+            'page_index': page,
+            'per_page': per_page,
+            'pages': float(total / per_page),
+        }
+    })
 
 
 @app.route('/api/advertisement/detail', methods=['GET'])
