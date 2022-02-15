@@ -61,8 +61,22 @@ Frontend(ReactJS)
 2. Dockerization
 
 
+### 2/9
 
-###Question
 
-###To do List
+1. Data : sqldump > advertisements/origin.sql
+2. Learning Docker
+3. Separately run React/app 
+
+
+### ~ 2/11 (Finish)
+
+
+1. Url > /advertisement
+   1. Method (GET, POST, PUT, DELETE) 다르면 /에 다르게 명시하지 않아도 됨.
+2. Absolute path > process.env.REACT_APP_API_URL || /api
+3. ?A={a}&B={b} response format
+
+
+
 

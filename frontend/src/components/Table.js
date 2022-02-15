@@ -4,7 +4,7 @@ import { useTable } from "react-table";
 import "./Table.css";
 // const API_URL = process.env.REACT_APP_API_URL || '/api'
 
-export default function Table({ columns, data }) {
+function Table({ columns, data }) {
   const {
     getTableProps, // table props from react-table
     getTableBodyProps, // table body props from react-table
@@ -55,3 +55,5 @@ export default function Table({ columns, data }) {
     </>
   );
 }
+
+export default Table
