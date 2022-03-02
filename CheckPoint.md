@@ -1,4 +1,4 @@
-#Simple Advertisements Application
+# Simple Advertisements Application
 
 ### 1/25
 Database & Backend
