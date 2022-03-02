@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from flask import Flask, jsonify, request, Response
 from flask_sqlalchemy import SQLAlchemy
 import datetime

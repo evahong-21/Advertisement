@@ -4,7 +4,15 @@ import { useState, useEffect } from "react";
 import { useHistory, Link } from "react-router-dom";
 import APIService from "../components/APIService";
 import moment from "moment";
-const API_URL = process.env.REACT_APP_API_URL || '/api'
+import Mark from "mark.js";
+const API_URL = process.env.REACT_APP_API_URL || "/api";
+
+// example1 : Protein/Gene
+const first = ["Description", "Advertise", "Title", "Price", "Date"];
+// example2 : DNA
+const second = ["detail", "earphone(samsung)", "earphone", "1500", "13:57:35"];
+// example3 : Species
+const third = ["gongcha", "LG"];
 
 function Detail({ match }) {
   const [article, setArticle] = useState([]);
@@ -17,10 +25,14 @@ function Detail({ match }) {
       },
     })
       .then((resp) => resp.json())
-                        // .then((resp)=>console.log(resp))
+      // .then((resp)=>console.log(resp))
       .then((resp) => setArticle(resp))
       .catch((error) => console.log(error));
   }, [match.params.id]);
+
+  useEffect(() => {
+    hightlight();
+  }, [article]);
 
   const deleteArticle = () => {
     APIService.DeleteArticle(article.id)
@@ -45,6 +57,17 @@ function Detail({ match }) {
     return confirmAction;
   };
 
+  const hightlight = () => {
+    const testHighlight = document.querySelectorAll("div.col");
+    testHighlight.forEach(function (userHighlight) {
+      const instance = new Mark(userHighlight);
+      console.log(userHighlight);
+      instance.mark(first, { className: "first" });
+      instance.mark(second, { className: "secondary" });
+      instance.mark(third, { className: "third" });
+    });
+  };
+
   //확인을 누르면 삭제, 취소를 누르면 그대로
   const deleteConfirm = () => deleteArticle(article);
   const cancelConfirm = () => history.push(`/detail/${article.id}`);
@@ -59,7 +82,7 @@ function Detail({ match }) {
     <div className="App">
       <div className="row">
         <div className="col">
-          <h1>Advertisements Detail</h1>
+          <h1>Advertisements Detail </h1>
         </div>
         <div className="col-md-2">
           <Link to="/" className="btn btn-light">
@@ -69,30 +92,26 @@ function Detail({ match }) {
       </div>
       <br />
       <br />
-      <div>
-        <div key={article.id}>
-          <h2>Title : {article.title}</h2>
-          <br />
-          <p>Description : {article.description}</p>
-          <p>Price : {article.price}</p>
-          <p>
-            Date : {moment(article.dateCreated).format("HH:mm:ss YY/MM/DD")}
-          </p>
-          <br />
-          <div className="row">
-            <div className="col-md-1">
-              <Link
-                to={{ pathname: `/put/${article.id}` }}
-                className="btn btn-outline-light"
-              >
-                Update
-              </Link>
-            </div>
-            <div className="col-md-1">
-              <button className="btn btn-outline-light" onClick={confirmDelete}>
-                Delete
-              </button>
-            </div>
+      <div className="col" key={article.id}>
+        <h2>Title : {article.title}</h2>
+        <br />
+        <p>Description : {article.description}</p>
+        <p>Price : {article.price}</p>
+        <p>Date : {moment(article.dateCreated).format("HH:mm:ss YY/MM/DD")}</p>
+        <br />
+        <div className="row">
+          <div className="col-md-1">
+            <Link
+              to={{ pathname: `/put/${article.id}` }}
+              className="btn btn-outline-light"
+            >
+              Update
+            </Link>
+          </div>
+          <div className="col-md-1">
+            <button className="btn btn-outline-light" onClick={confirmDelete}>
+              Delete
+            </button>
           </div>
         </div>
       </div>

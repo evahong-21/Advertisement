@@ -12,6 +12,22 @@
   appearance: none;
 }
 
+mark.first {
+  padding: 0;
+  background-color : yellow;
+}
+mark.secondary {
+  padding: 0;
+  background-color: orange;
+}
+mark.third {
+  padding: 0;
+  background-color: blueviolet;
+}
+span {
+  background-color: red;
+}
+
 /* .App-logo {
   height: 40vmin;
   pointer-events: none;
