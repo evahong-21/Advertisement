@@ -5,17 +5,21 @@ import { useHistory, Link } from "react-router-dom";
 import APIService from "../components/APIService";
 import moment from "moment";
 import Mark from "mark.js";
+import { Switch } from "evergreen-ui";
+
 const API_URL = process.env.REACT_APP_API_URL || "/api";
 
 // example1 : Protein/Gene
-const first = ["Description", "Advertise", "Title", "Price", "Date"];
+const first = ["brand", "samsung", "apple"];
 // example2 : DNA
-const second = ["detail", "earphone(samsung)", "earphone", "1500", "13:57:35"];
+const second = ["computer", "keyboard", "mouse", "moniter"];
 // example3 : Species
-const third = ["gongcha", "LG"];
+const third = ["beverage", "gongcha", "starbucks"];
 
 function Detail({ match }) {
   const [article, setArticle] = useState([]);
+  const [value, setValue] = useState(false);
+
   const history = useHistory();
   useEffect(() => {
     fetch(`${API_URL}/advertisement/detail?id=${match.params.id}`, {
@@ -31,8 +35,12 @@ function Detail({ match }) {
   }, [match.params.id]);
 
   useEffect(() => {
-    hightlight();
-  }, [article]);
+    if (value) {
+      highlight();
+    } else {
+      nonHighlight();
+    }
+  }, [value, article]);
 
   const deleteArticle = () => {
     APIService.DeleteArticle(article.id)
@@ -57,14 +65,23 @@ function Detail({ match }) {
     return confirmAction;
   };
 
-  const hightlight = () => {
+  const highlight = () => {
     const testHighlight = document.querySelectorAll("div.col");
     testHighlight.forEach(function (userHighlight) {
       const instance = new Mark(userHighlight);
-      console.log(userHighlight);
+      // console.log(userHighlight);
       instance.mark(first, { className: "first" });
       instance.mark(second, { className: "secondary" });
       instance.mark(third, { className: "third" });
+    });
+  };
+
+  const nonHighlight = () => {
+    const testHighlight = document.querySelectorAll("div.descript");
+    testHighlight.forEach(function (userHighlight) {
+      const instance = new Mark(userHighlight);
+      // console.log(userHighlight);
+      instance.unmark();
     });
   };
 
@@ -95,9 +112,28 @@ function Detail({ match }) {
       <div className="col" key={article.id}>
         <h2>Title : {article.title}</h2>
         <br />
-        <p>Description : {article.description}</p>
-        <p>Price : {article.price}</p>
-        <p>Date : {moment(article.dateCreated).format("HH:mm:ss YY/MM/DD")}</p>
+
+        <div className="descript">
+          <Switch
+            checked={value}
+            onChange={() => {
+              // value ? nonHighlight() : highlight();
+              setValue(!value);
+            }}
+          />
+
+          <span>
+            Auto Highlights
+            <span>{value ? "Beverage computer brand" : ""}</span>
+          </span>
+          <br />
+          <br />
+          <p>Description : {article.description}</p>
+          <p>Price : {article.price}</p>
+          <p>
+            Date : {moment(article.dateCreated).format("HH:mm:ss YY/MM/DD")}
+          </p>
+        </div>
         <br />
         <div className="row">
           <div className="col-md-1">
