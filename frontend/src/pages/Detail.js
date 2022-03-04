@@ -10,11 +10,9 @@ import TextMarker from "../components/TextMarker";
 
 const API_URL = process.env.REACT_APP_API_URL || "/api";
 
-// example1 : Protein/Gene
+// example : Protein/Gene, Species, DNA
 const first = ["brand", "samsung", "apple"];
-// example2 : DNA
 const second = ["computer", "keyboard", "mouse", "moniter"];
-// example3 : Species
 const third = ["beverage", "gongcha", "starbucks"];
 
 function Detail({ match }) {
@@ -37,8 +35,9 @@ function Detail({ match }) {
   }, [match.params.id]);
 
   useEffect(() => {
-    autoHighlight ? highlight() : nonHighlight();
-  }, [autoHighlight, article]);
+    autoHighlight ? highlight() : nonHighlight(true);
+    !textMarker ? nonHighlight(false) : customHighlight();
+  }, [autoHighlight, textMarker, article]);
 
   const deleteArticle = () => {
     APIService.DeleteArticle(article.id)
@@ -83,11 +82,23 @@ function Detail({ match }) {
     });
   };
 
-  const nonHighlight = () => {
+  const nonHighlight = (props) => {
     const testHighlight = document.querySelectorAll("div.descript");
     testHighlight.forEach(function (userHighlight) {
       const instance = new Mark(userHighlight);
-      instance.unmark();
+      // instance.unmark();
+      if (props === true) {
+        instance.unmark({ className: "first" });
+        instance.unmark({ className: "secondary" });
+        instance.unmark({ className: "third" });
+      } else {
+        instance.unmark({ className: "n0" });
+        instance.unmark({ className: "n1" });
+        instance.unmark({ className: "n2" });
+        instance.unmark({ className: "n3" });
+        instance.unmark({ className: "n4" });
+        instance.unmark({ className: "n5" });
+      }
     });
   };
 
@@ -129,7 +140,6 @@ function Detail({ match }) {
           <div>{textMarker ? customHighlight() : ""}</div>
           <br />
         </div>
-
         <div id="Auto-Highlight-Box">
           <Switch
             checked={autoHighlight}

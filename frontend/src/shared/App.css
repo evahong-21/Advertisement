@@ -43,7 +43,7 @@ mark.third {
 
 #Auto-Highlight-Box {
   width : 400px;
-  /*float : right;*/
+  float : left;
   /*border-color : white;*/
   /*border-style: solid;*/
   display: inline-block;
