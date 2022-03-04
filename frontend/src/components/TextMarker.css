@@ -1,0 +1,62 @@
+mark.n0 {
+  padding: 0;
+  background-color : #F2D7D5;
+}
+mark.n1 {
+  padding: 0;
+  background-color: #C39BD3;
+}
+mark.n2 {
+  padding: 0;
+  background-color: #F9E79F;
+}
+mark.n3 {
+  padding: 0;
+  background-color: #85C1E9;
+}
+mark.n4 {
+  padding: 0;
+  background-color: #FAD7A0;
+}
+mark.n5 {
+  padding: 0;
+  background-color: #A3E4D7;
+}
+
+#box {
+  /*position : relative;*/
+  width : 200px;
+  /*border-color : green;*/
+  /*border-style: solid;*/
+  display: inline-block;
+}
+
+.search-color-box #searchBox {
+  width : 120px;
+}
+
+.search-color-box #colorBox {
+  position : relative;
+  width: 30px;
+  height: 30px;
+  top: 9px;
+}
+
+.search-color-box #deleteBox {
+  position : relative;
+  font-size: 5px;
+  text-align: center;
+  padding-left: 2px;
+  /*padding-top: -10px;*/
+  left : 5px;
+  top : -2px;
+  width: 25px;
+  height: 25px;
+}
+
+/*#box {*/
+/*  border : black;*/
+/*  color : red;*/
+/*  background-color: red;*/
+/*  padding: -5px;*/
+/*}*/

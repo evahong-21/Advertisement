@@ -25,6 +25,31 @@ mark.third {
   background-color: blueviolet;
 }
 
+#Switch-Box {
+  /*width : 150px;*/
+  /*border-color : blue;*/
+  /*border-style: solid;*/
+
+}
+
+#TextMarker-Box {
+  width : 650px;
+  /*border-color : red;*/
+  /*border-style: solid;*/
+  /*float : left;*/
+  display: inline-block;
+
+}
+
+#Auto-Highlight-Box {
+  width : 400px;
+  /*float : right;*/
+  /*border-color : white;*/
+  /*border-style: solid;*/
+  display: inline-block;
+
+}
+
 /* .App-logo {
   height: 40vmin;
   pointer-events: none;

@@ -6,6 +6,7 @@ import APIService from "../components/APIService";
 import moment from "moment";
 import Mark from "mark.js";
 import { Switch } from "evergreen-ui";
+import TextMarker from "../components/TextMarker";
 
 const API_URL = process.env.REACT_APP_API_URL || "/api";
 
@@ -18,9 +19,10 @@ const third = ["beverage", "gongcha", "starbucks"];
 
 function Detail({ match }) {
   const [article, setArticle] = useState([]);
-  const [value, setValue] = useState(false);
-
+  const [autoHighlight, setAutoHighlight] = useState(false);
+  const [textMarker, setTextMarker] = useState(false);
   const history = useHistory();
+
   useEffect(() => {
     fetch(`${API_URL}/advertisement/detail?id=${match.params.id}`, {
       method: "GET",
@@ -35,12 +37,8 @@ function Detail({ match }) {
   }, [match.params.id]);
 
   useEffect(() => {
-    if (value) {
-      highlight();
-    } else {
-      nonHighlight();
-    }
-  }, [value, article]);
+    autoHighlight ? highlight() : nonHighlight();
+  }, [autoHighlight, article]);
 
   const deleteArticle = () => {
     APIService.DeleteArticle(article.id)
@@ -65,11 +63,20 @@ function Detail({ match }) {
     return confirmAction;
   };
 
+  //확인을 누르면 삭제, 취소를 누르면 그대로
+  const deleteConfirm = () => deleteArticle(article);
+  const cancelConfirm = () => history.push(`/detail/${article.id}`);
+
+  const confirmDelete = useConfirm(
+    "Are you sure you want to delete?",
+    deleteConfirm,
+    cancelConfirm
+  );
+
   const highlight = () => {
-    const testHighlight = document.querySelectorAll("div.col");
+    const testHighlight = document.querySelectorAll("div.App");
     testHighlight.forEach(function (userHighlight) {
       const instance = new Mark(userHighlight);
-      // console.log(userHighlight);
       instance.mark(first, { className: "first" });
       instance.mark(second, { className: "secondary" });
       instance.mark(third, { className: "third" });
@@ -80,20 +87,22 @@ function Detail({ match }) {
     const testHighlight = document.querySelectorAll("div.descript");
     testHighlight.forEach(function (userHighlight) {
       const instance = new Mark(userHighlight);
-      // console.log(userHighlight);
       instance.unmark();
     });
   };
 
-  //확인을 누르면 삭제, 취소를 누르면 그대로
-  const deleteConfirm = () => deleteArticle(article);
-  const cancelConfirm = () => history.push(`/detail/${article.id}`);
-
-  const confirmDelete = useConfirm(
-    "Are you sure you want to delete?",
-    deleteConfirm,
-    cancelConfirm
-  );
+  const customHighlight = () => {
+    return (
+      <>
+        <TextMarker index={"n0"} color={"#F2D7D5"} />
+        <TextMarker index={"n1"} color={"#C39BD3"} />
+        <TextMarker index={"n2"} color={"#F9E79F"} />
+        <TextMarker index={"n3"} color={"#85C1E9"} />
+        <TextMarker index={"n4"} color={"#FAD7A0"} />
+        <TextMarker index={"n5"} color={"#A3E4D7"} />
+      </>
+    );
+  };
 
   return (
     <div className="App">
@@ -108,26 +117,36 @@ function Detail({ match }) {
         </div>
       </div>
       <br />
+      <div id="Switch-Box">
+        <div id="TextMarker-Box">
+          <Switch
+            checked={textMarker}
+            onChange={() => {
+              setTextMarker(!textMarker);
+            }}
+          />
+          <span>Text Markers</span>
+          <div>{textMarker ? customHighlight() : ""}</div>
+          <br />
+        </div>
+
+        <div id="Auto-Highlight-Box">
+          <Switch
+            checked={autoHighlight}
+            onChange={() => {
+              setAutoHighlight(!autoHighlight);
+            }}
+          />
+          <span>
+            Auto Highlights
+            <span>{autoHighlight ? "  Beverage computer brand" : ""}</span>
+          </span>
+        </div>
+      </div>
       <br />
       <div className="col" key={article.id}>
         <h2>Title : {article.title}</h2>
-        <br />
-
         <div className="descript">
-          <Switch
-            checked={value}
-            onChange={() => {
-              // value ? nonHighlight() : highlight();
-              setValue(!value);
-            }}
-          />
-
-          <span>
-            Auto Highlights
-            <span>{value ? "Beverage computer brand" : ""}</span>
-          </span>
-          <br />
-          <br />
           <p>Description : {article.description}</p>
           <p>Price : {article.price}</p>
           <p>
