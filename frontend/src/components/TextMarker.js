@@ -4,7 +4,6 @@ import "./TextMarker.css";
 
 function TextMarker({ index, color }) {
   const [search, setSearch] = useState("");
-  // console.log(search);
   const add_textbox = () => {
     const testHighlight = document.querySelectorAll("div.descript");
     testHighlight.forEach(function (userHighlight) {
